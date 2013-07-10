@@ -41,6 +41,8 @@ GetEllipsoidXYZ <- function(theta, phi, radius.major = 6378,
     pz <- radius*cos(theta)
     
     result <- c(px, py, pz)
+    
+    return(result)
 }
 
 Equirectangular <- function(x, y, res) {
@@ -71,36 +73,40 @@ CylindricEqualArea <- function(x, y, res) {
     return(result)
 }
 
-GenProjection(res, projection = "Equirectangular", standard.parallel = 37.5) {
-    # Returns an array consisting of the 3D coordinates that correspond to
-    # each pixel.
+GenProjection <- function(res, projection = "Equirectangular",
+                          standard.parallel = 37.5) {
+    # Returns a position array consisting of the 3D coordinates that correspond
+    # with each pixel.
     #
     # projection is which projection is being used to generate the image.
     # standard.parallel is used for cylindric equal area projection such as
     #     Gall-Peters and Hobo-Dyer.
-    # For cylindric equal area projections, res[2] is ignored and replaced with
+    # For cylindric equal-area projections, res[2] is ignored and replaced with
     # the appropriate value.
 
     
-    cyl.eq.area <- c("Gall-Peters", "Hobo-Dyer")
-    cyl.refs <- c(1/sqrt(2), cos(37.5*pi/180))
+    cyl.eq.area <- c("Lambert Cylindrical", "Behrmann", "Smyth", "Craster",
+                     "Hobo-Dyer", "Gall-Peters", "Balthasart")
     
     if (projection == "Equirectangular") {
         TheProj <- Equirectangular
     } else if (projection %in% cyl.eq.area) {
-        res[2] <- 
         TheProj <- CylindricEqualArea
-        factor <- cyl.refs[projection == cyl.eq.area]
+        
+        cyl.refs <- c(0, 30, 37+1/15, 37.4, 37.5, 45, 50)
+        factor <- cos(cyl.refs[projection == cyl.eq.area] * pi / 180)
         res[2] <- res[1]/(factor^2 * pi)
     } else if (projection == "Cylindric Equal Area") {
         factor <- cos(standard.parallel*pi/180)
     }
     
-    pos.matrix <- array(0, dim=c(res[2], res[1], 2))
-    for (y in seq(0, res[2], length.out=res[2])) {
-        thetaphi.row <- sapply(0:(res[1]-1), function(x) TheProj(x, y, res))
-        
-        
+    pos.array <- array(0, dim=c(res[2], res[1], 3))
+    for (y in 1:res[2]) {
+        y2 <- (y - 1) * res[2] / (res[2] - 1)
+        thetaphi.row <- sapply(0:(res[1]-1), function(x) TheProj(x, y2, res))
+        pos.array[y, , ] <- t(apply(thetaphi.row, 2, function(x)
+            GetSphericalXYZ(x[1], x[2])))
     }
     
+    return(pos.array)
 }
