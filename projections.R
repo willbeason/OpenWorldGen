@@ -1,12 +1,12 @@
-#Author: beason4251
+# Author: Will Beason
 # BARELY FUNCTIONAL
-
+#
 # Functions which return the coordinate in 3D space which corresponds with a
 # given pixel for their respective map projection.
-
+#
 # In general, these functions are for mapping the 3D noise onto the planet.
 # More uses may become apparent later.
-
+#
 # These are some standard variables. Some projections require additional
 #     variables, which will be specified inside the respective functions.
 #
