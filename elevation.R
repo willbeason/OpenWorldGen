@@ -4,10 +4,6 @@
 # Functions which genereate noise and apply it to an array of coordinates.
 # Currently only uses Perlin Fractal noise.
 
-# projections.R is not required for this to run, just make testing easier
-# source("projections.R", local = TRUE)
-# test.proj <- GenProjection(c(200, 100), radius = 5000)
-
 GetHeight <- function(rel.pos, sur.noise, roughness, depth) {
     # Given a position and the surrounding noise, get the height.
     # Uses linear interpolation
@@ -67,6 +63,7 @@ GenHeights <- function(pos.array, noise = "Perlin", max.feature.size = 5000,
     for (y in 1:dim(pos.array)[1]) {
         for (x in 1:dim(pos.array)[2]) {
             pos <- pos.array[y, x, ]
+            
             cor.1 <- (-1 + floor(outer(pos, inv.feature.size))) %% 
                 noise.size + 1
             cor.2 <- cor.1 %% noise.size + 1

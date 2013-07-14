@@ -16,6 +16,11 @@
 # radius is the radius of the planet, in kilometers.
 
 SphericalXYZ <- function(theta.set, phi.set, radius.set) {
+    # theta.set is a vector of theta spherical coordinates.
+    # phi.set is a vector of phi spherical coordinates
+    # radius.set is a vector of radii by theta value; only applicable for
+    #     non-spherical planets
+    #
     # Maps theta and phi coordinates onto a sphere.
     # Default radius is the average for Earth.
     x.max <- length(phi.set)
@@ -26,10 +31,10 @@ SphericalXYZ <- function(theta.set, phi.set, radius.set) {
     phi.sin <- sin(phi.set)
     phi.cos <- cos(phi.set)
     
-    px <- radius.set * outer(theta.sin, phi.cos)
-    py <- radius.set * outer(theta.sin, phi.sin)
+    px <- radius.set * outer(theta.sin, phi.cos) + 1e-10
+    py <- radius.set * outer(theta.sin, phi.sin) + 1e-10
     pz.set <- theta.cos * radius.set
-    pz <- rep_len(pz.set, y.max * x.max)
+    pz <- rep_len(pz.set, y.max * x.max) + 1e-10
     
     pos.array <- array(c(px, py, pz), dim=c(y.max, x.max, 3))
     
@@ -37,8 +42,10 @@ SphericalXYZ <- function(theta.set, phi.set, radius.set) {
 }
 
 EquirectangularX <- function(x.max) {
+    # x.max is the x-dimension of the image
+    #
     # Used for many projections, any where x is linearly mapped to phi
-    # independent of y.
+    # and independent of y.
     inv.x.max <- 1 / x.max
     phi.set <- 0:(x.max - 1) * inv.x.max * 2 * pi
     
@@ -46,6 +53,8 @@ EquirectangularX <- function(x.max) {
 }
 
 EquirectangularY <- function(y.max) {
+    # y.max is the y-dimension of the image
+    #
     # Specifically for equirectangular mappings.
     theta.set <- seq(0, pi, length.out = y.max)
     
@@ -53,6 +62,8 @@ EquirectangularY <- function(y.max) {
 }
 
 CylindricEqualAreaY <- function(y.max) {
+    # y.max is the y-dimension of the image
+    #
     # For equal area projections such as Gall-Peters and Hobo-Dyer.
     y.set <- seq(y.max, 0, length.out = y.max)
     inv.y.max = 1 / y.max
@@ -78,7 +89,7 @@ GenProjection <- function(res, projection = "Equirectangular",
     # projection is which projection is being used to generate the image.
     # shape is the shape of the planet. Currently only accepts "Spheroid".
     # radius is a number or 2-vector. A single number is used for a spherical
-    # projection, and a 2-vector is used for ellipsoids and tori.
+    #     projection, and a 2-vector is used for ellipsoids and tori.
     # standard.parallel is used for cylindric equal area projection such as
     #     Gall-Peters and Hobo-Dyer.
     # For cylindric equal-area projections, res[2] is ignored and replaced with
