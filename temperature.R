@@ -41,3 +41,5 @@ GetTemp <- function(height.array, sea.level, projection = "Equirectangular") {
     
     return(temp.array)
 }
+
+

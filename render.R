@@ -25,10 +25,13 @@ ChooseColor <- function(height.array, sea.level) {
     return(color.array)
 }
 
+par(mar = c(1,1,1,1))
+contour(t(temperature.array))
+
 Render <- function(color.array) {
     # color.array is an array of colors
     
-    bmp("test3.bmp", width = 800, height = 400, units = "px")
+    bmp("test4.bmp", width = 1600, height = 800, units = "px")
     par(mar = c(0, 0, 0, 0) )
     image(t(color.array), col = c("#0000FF", "#00FF00", "#AAAAAA"), xaxt = "n", yaxt = "n")
     # image(t(color.array), col = heat.colors(100), xaxt = "n", yaxt = "n")
