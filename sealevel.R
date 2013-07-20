@@ -27,18 +27,20 @@ SeaLevel <- function(height.array, proj = "Equirectangular", waterprop = 0.708) 
         
     }
     
-    tol <- 2 * max(land.total[, 2])
+    tol <- 1
     
     i <- as.integer(pix * waterprop)
     found = FALSE
+    cur.sea.area <- sum(area.vec[seq(1, i, length.out = i)])
     while (found == FALSE) {
-        cur.sea.area <- sum(area.vec[seq(1, i, length.out = i)])
         if (abs(cur.sea.area - sea.area) <= tol) {
             found = TRUE
         } else if (cur.sea.area < sea.area) {
-            i <- i + 1
+            cur.sea.area <- cur.sea.area + sum(area.vec[(i + 1):(i + tol)])
+            i <- i + tol
         } else {
-            i <- i - 1
+            cur.sea.area <- cur.sea.area + sum(area.vec[(i - tol + 1):i])
+            i <- i - tol
         }
     }
     
