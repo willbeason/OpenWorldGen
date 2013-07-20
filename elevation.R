@@ -40,7 +40,7 @@ GetHeight <- function(rel.pos, sur.noise, roughness, depth) {
     return(altitude)
 }
 
-GenHeights <- function(pos.array, noise = "Perlin", max.feature.size = 5000,
+GenHeights <- function(pos.array, noise = "Perlin", max.feature.size = 3000,
                        roughness = 0.1, noise.size = 10, fractal = TRUE,
                        depth = 5) {
     # pos.array is the position array created by GenProjection.
