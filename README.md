@@ -21,11 +21,11 @@ Uses 3D fractal Perlin noise to generate elevation.
 
 3. Sea Level
 ------------
-In progress. Allows the user to set the percent of the planet which is covered in water. For now, the program will naively set all water levels to be constant. Later on, will permit dry land below sea level and lakes above sea level based on climate simulations.
+Complete. Allows the user to set the percent of the planet which is covered in water. For now, the program will naively set all water levels to be constant. Later on, will permit dry land below sea level and lakes above sea level based on climate simulations.
 
 4. Climates
 -----------
-Once sea levels work, climates will be implemented. This project will use the Koppen Climate Classification system.
+In progress. Implementing a very basic climate simulation for climate classification. This project will use the Koppen Climate Classification system.
 
 5. Rendering
 ------------
