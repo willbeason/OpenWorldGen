@@ -1,6 +1,22 @@
 #include <iostream>
+#include <curses.h>
 
 using namespace std;
+
+int menu {
+  cout << "Welcome to OpenWorldGen by William Beason.\n";
+  cout << "Are there any options you would like to change?\n";
+  cout << "(1) View Options\n";
+  cout << "(2) Render\n";
+  cout << "(3) Quit\n";
+  cout << "Enter choice: ";
+  cin >> menu.choice;
+  cout << endl;
+}
+
+int displayOptions {
+  return(0);
+}
 
 int main() {
   int picWidth = 1600;
@@ -11,14 +27,25 @@ int main() {
   
   int depth = 5;
   
-  bool menu = TRUE;
+  bool inprog = TRUE;
   int menu.choice = 0;
-  
-  while (menu) {
-    cout << "Are there any options you would like to change?\n"
-    cout << "(1) View Options\n"
-    cout << "(2) Render\n"
-    cin >> menu.choice;
+ 
+  while (inprog) {
+    menu.choice = menu();
+    
+    switch (menu.choice)
+      case 3:
+        inprog = FALSE;
+        break;
+      case 1:
+        // Display options
+        break;
+      case 2:
+        system("Rscript render.R");
+        // Render world
+        break;
+      default:
+        cout << "Invalid Menu Choice.\n";
   }
   
 }
