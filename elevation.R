@@ -61,6 +61,7 @@ GenHeights <- function(pos.array, noise = "Perlin", max.feature.size = 3000,
     altitude.array <- array(integer(prod(the.dim)), dim=the.dim)
     
     for (y in 1:dim(pos.array)[1]) {
+        print(y)
         for (x in 1:dim(pos.array)[2]) {
             pos <- pos.array[y, x, ]
             

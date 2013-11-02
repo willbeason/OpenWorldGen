@@ -1,0 +1,20 @@
+# Image Settings
+picWidth = 1600
+picHeight = 800
+
+# Projection Settings
+projection = "Equirectangular"
+shape = "Spheroid"
+radius = 6371
+standard.parallel = 37.5
+
+# World Generator Settings
+noise = "Perlin"
+maxFeatureSize = 3000
+roughness = 0.1
+noise.size = 10
+fractal = TRUE
+maxDepth = 5
+
+# World Settings
+seaLevel = 0.708

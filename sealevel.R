@@ -27,7 +27,7 @@ SeaLevel <- function(height.array, proj = "Equirectangular", waterprop = 0.708) 
         
     }
     
-    tol <- 1
+    tol <- 2
     
     i <- as.integer(pix * waterprop)
     found = FALSE
